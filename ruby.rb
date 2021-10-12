@@ -8,12 +8,18 @@ template :login do
   '''
     <form action="/sign_in" method="post">
       <label for="fname">Email:</label><br>
-      <input type="text" id="name" name="email" value="john@hellonext.co"><br>
+      <input type="text" id="email" name="email" value="john@hellonext.co"><br>
+
+      <label for="fname">Name:</label><br>
+      <input type="text" id="name" name="name" value="John Smith"><br>
+
+      <input type="hidden" id="domain" name="domain" value="<%= params[:domain] %>"><br>
+      <input type="hidden" id="redirect" name="redirect" value="<%= params[:redirect] %>"><br>
+
       <input type="submit" value="Submit">
     </form>
   '''
 end
-
 get '/' do
   'Hello World'
 end
@@ -27,9 +33,9 @@ post '/sign_in' do
   key = <ORGNAIZATION_SSO_KEY>
   payload = {
     email: params[:email],
-    name: 'John Smith'
+    name: params[:name]
   }
-  
+
   # This token is unique for every user and helps us authenticate. Read more here: https://hellonext.co/help/setting-up-sso
   sso_token = JWT.encode payload, key, 'HS256'
 
